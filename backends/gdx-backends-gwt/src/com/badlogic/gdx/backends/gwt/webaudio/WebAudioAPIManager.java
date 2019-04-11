@@ -142,14 +142,10 @@ public class WebAudioAPIManager implements LifecycleListener {
 		return audioContext;
 	}
 
-	public Sound createSound (FileHandle fileHandle, boolean useBaseUrl) {
+	public Sound createSound (FileHandle fileHandle) {
 		final WebAudioAPISound newSound = new WebAudioAPISound(audioContext, globalVolumeNode, audioControlGraphPool);
 		
-		String url = "";
-		if (useBaseURL)
-			url = ((GwtApplication)Gdx.app).getBaseUrl() + fileHandle.path();
-		else
-			url = fileHandle.path();
+		String url = fileHandle.path();
 
 		XMLHttpRequest request = XMLHttpRequest.create();
 		request.setOnReadyStateChange(new ReadyStateChangeHandler() {
@@ -177,12 +173,8 @@ public class WebAudioAPIManager implements LifecycleListener {
 		return newSound;
 	}
 
-	public Music createMusic (FileHandle fileHandle, boolean useBaseUrl) {
-		String url = "";
-		if (useBaseURL)
-			url = ((GwtApplication)Gdx.app).getBaseUrl() + fileHandle.path();
-		else
-			url = fileHandle.path();
+	public Music createMusic (FileHandle fileHandle) {
+		String url = fileHandle.path();
 
 		Audio audio = Audio.createIfSupported();
 		audio.setSrc(url);
